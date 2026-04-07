@@ -1,0 +1,30 @@
+<div style="display: flex; gap: 10px;">
+    <div style="display: flex; flex: 1; flex-direction: column;">
+        <h4 style="margin: 6px;">Devices</h4>
+        <textarea style="height: 500px; resize: none; line-height: 2;"
+                id="devices"
+                name="devices"
+                rows="8"
+                placeholder="router1.example.com&#10;router2.example.com"
+                required
+        ></textarea>
+    </div>
+
+    <div style="display: flex; flex: 1; flex-direction: column;">
+        <h4 style="margin: 6px;">Commands</h4>
+        <textarea style="height: 500px; resize: none; line-height: 2;"
+                id="commands"
+                name="commands"
+                rows="8"
+                placeholder="show version&#10;show ip interface brief"
+                required
+        ></textarea>
+    </div>
+</div>
+<div style="display: flex; flex: 1; flex-direction: column;">
+    <h4 style="margin: 6px;">Output Format</h4>
+    <select id="output_type" name="output_type">
+        <option value="Text" selected>Text (.txt per device)</option>
+        <option value="Excel">Excel (.xlsx)</option>
+    </select>
+</div>
