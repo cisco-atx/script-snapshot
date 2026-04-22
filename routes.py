@@ -1,9 +1,26 @@
+"""
+Snapshot routes module.
+
+Provides the SnapshotScript class for handling user input and executing
+snapshot collection tasks across network devices. It validates inputs,
+renders templates, and triggers worker execution.
+
+File path: routes.py
+"""
+
+import logging
 import os
-import sys
+
 from flask import render_template_string
+
 from .workers import run_snapshot
 
+logger = logging.getLogger(__name__)
+
+
 class SnapshotScript:
+    """Script to collect command outputs from network devices."""
+
     meta = {
         "name": "Snapshot",
         "version": "1.0.0",
@@ -15,20 +32,38 @@ class SnapshotScript:
     }
 
     def __init__(self, ctx=None):
+        """Initialize SnapshotScript with context."""
         self.ctx = ctx
 
     @classmethod
     def input(self):
+        """Render input HTML template."""
         input_template = os.path.join(
             os.path.dirname(__file__),
             "templates",
-            "input.html"
+            "input.html",
         )
-        return render_template_string(open(input_template).read())
+
+        try:
+            with open(input_template, encoding="utf-8") as file:
+                template_content = file.read()
+            return render_template_string(template_content)
+        except Exception:
+            logger.exception("Failed to load input template")
+            raise
 
     def run(self, inputs):
-        devices = [d.strip() for d in inputs.get("devices", "").splitlines() if d.strip()]
-        commands = [c.strip() for c in inputs.get("commands", "").splitlines() if c.strip()]
+        """Execute snapshot collection based on user inputs."""
+        devices = [
+            d.strip()
+            for d in inputs.get("devices", "").splitlines()
+            if d.strip()
+        ]
+        commands = [
+            c.strip()
+            for c in inputs.get("commands", "").splitlines()
+            if c.strip()
+        ]
         output_type = inputs.get("output_type", "Text")
         connector = self.ctx.config.get("connector", {})
 
@@ -45,20 +80,17 @@ class SnapshotScript:
             self.ctx.error("No Connector information provided")
             return
 
-        # Execute worker logic
-        run_snapshot(
-            devices=devices,
-            commands=commands,
-            output_type=output_type,
-            connector=connector,
-            ctx=self.ctx
-        )
+        try:
+
+            run_snapshot(
+                devices=devices,
+                commands=commands,
+                output_type=output_type,
+                connector=connector,
+                ctx=self.ctx,
+            )
+
+        except Exception:
+            raise
 
         self.ctx.finish()
-
-
-
-
-
-
-

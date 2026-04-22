@@ -1,30 +1,54 @@
+<!-- Main container: holds Devices and Commands side by side -->
 <div style="display: flex; gap: 10px;">
-    <div style="display: flex; flex: 1; flex-direction: column;">
+
+    <!-- Devices Section -->
+    <section style="display: flex; flex: 1; flex-direction: column;">
+        <!-- Section Title -->
         <h4 style="margin: 6px;">Devices</h4>
-        <textarea style="height: 500px; resize: none; line-height: 2;"
+
+        <!-- Devices Input: Multiline textarea for entering device hostnames -->
+        <textarea
                 id="devices"
                 name="devices"
                 rows="8"
+                style="height: 500px; resize: none; line-height: 2;"
                 placeholder="router1.example.com&#10;router2.example.com"
                 required
         ></textarea>
-    </div>
+    </section>
 
-    <div style="display: flex; flex: 1; flex-direction: column;">
+    <!-- Commands Section -->
+    <section style="display: flex; flex: 1; flex-direction: column;">
+        <!-- Section Title -->
         <h4 style="margin: 6px;">Commands</h4>
-        <textarea style="height: 500px; resize: none; line-height: 2;"
+
+        <!-- Commands Input: Multiline textarea for entering CLI commands -->
+        <textarea
                 id="commands"
                 name="commands"
                 rows="8"
+                style="height: 500px; resize: none; line-height: 2;"
                 placeholder="show version&#10;show ip interface brief"
                 required
         ></textarea>
-    </div>
+    </section>
+
 </div>
-<div style="display: flex; flex: 1; flex-direction: column;">
+
+<!-- Output Format Section -->
+<section style="display: flex; flex: 1; flex-direction: column;">
+
+    <!-- Section Title -->
     <h4 style="margin: 6px;">Output Format</h4>
+
+    <!-- Output Type Selector -->
     <select id="output_type" name="output_type">
-        <option value="Text" selected>Text (.txt per device)</option>
-        <option value="Excel">Excel (.xlsx)</option>
+        <option value="Text" selected>
+            Text (.txt per device)
+        </option>
+        <option value="Excel">
+            Excel (.xlsx)
+        </option>
     </select>
-</div>
+
+</section>
